@@ -4,7 +4,6 @@ import os
 
 import buffer
 
-from test2 import client
 
 HOST = '127.0.0.1'
 PORT =55554
@@ -133,8 +132,6 @@ if __name__=="__main__":
     port=55578
     SIZE = 1024
     FORMAT = "utf-8"
-    FILENAME = "friends-final.txt"
-    FILESIZE = os.path.getsize(FILENAME)
     socket=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     choosetype=input("Are you Reciver : ")
     nickname=input("Enter your Nick Name: ")

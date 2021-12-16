@@ -9,11 +9,12 @@ import re
 from pytz import timezone
 from datetime import timedelta
 import email
+import time
 
 import datetime    
 host = 'imap.gmail.com' # mail api address
-username = 'example@gmail.com'# enter your mail address
-password = 'Your password' # enter your password
+username = 'Nithinkirthick.it19@bitsathy.ac.in'# enter your mail address
+password = 'Nithin@2002' # enter your password
 cleaner = re.compile('<.*?>') #clear the tags from mail
 cleaner_2 = re.compile('=.*?=')
 byte=[] # array declare
@@ -21,23 +22,42 @@ email_data = {}
 def get_inbox():#function
     mail = imaplib.IMAP4_SSL(host) 
     mail.login(username, password) #login using your credentials
-    status, messages = mail.select("INBOX",readonly=True) # read inbox from your mail address
-    today = datetime.datetime.now()  # get the current date and time
-    yesterday = today - timedelta(days = 1)  # get yesterday date
-    Time=yesterday.strftime("%d-%b-%Y") #format the date to 12 Oct 2021
-    date='SINCE '+Time
-    _,search_data=mail.search(None,date) # search mail by date
-    for num in reversed(search_data[0].split()):
+    status, messages = mail.select() # read inbox from your mail address
+    # today = datetime.datetime.now()  # get the current date and time
+    # yesterday = today - timedelta(days = 1)  # get yesterday date
+    # Time=yesterday.strftime("%d-%b-%Y") #format the date to 12 Oct 2021
+    # date='SINCE '+Time
+    _,search_data=mail.search(None,'ALL') # search mail by date
+    list=[int(i) for i in search_data[0].decode().split()]
+    print(len(list))
+    for num in search_data[0].split():
+        print(f'Deleted Id:{num.decode()}')
+        if(int(num.decode())>len(list)-500):
+            mail.expunge()
+            break
         _, data = mail.fetch(num,'(RFC822)') #Standard for ARPA Internet Text Messages
         _, b = data[0] #extract the 0th index from the list
         email_message = email.message_from_bytes(b) #decode the the mail messege
         for From,Date,sub in zip(['from'],['Date'],['subject']): # extract the data from the msg
             frommail = re.sub(cleaner, '',email_message[From]) # rm the unwanted char
-            print(f'\nFrom {frommail}at {email_message[Date]}') #format the input
-            print(f'Subject {sub}')
-            s=input("\nPress Enter to Continue....") #enter to continue or type any other key and press enter
-            if(s!=''):
-                exit()
+            if("Gmail Team" in frommail):
+                continue
+            elif("GOKULAKRISHNAN D" in frommail):
+                continue
+            elif("MADHUSUDHANAN G" in frommail):
+                continue
+            elif("BALAKUMAR M" in frommail):
+                continue
+            elif("SHRI THARANYAA J P BIT" in frommail):
+                continue
+            elif("TAMILSELVAN S" in frommail):
+                continue
+            mail.store(num, "+FLAGS", "\\Deleted")
+            print(f'\nDeleted From {frommail}at {email_message[Date]}') #format the input
+            # print(f'Subject {sub}')
+            # s=input("\nPress Enter to Continue....") #enter to continue or type any other key and press enter
+            # if(s!=''):
+            #     exit()
                 
 
  
