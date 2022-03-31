@@ -13,8 +13,8 @@ import time
 
 import datetime    
 host = 'imap.gmail.com' # mail api address
-username = 'Example@gmail.com'# enter your mail address
-password = 'password' # enter your password
+username = 'Nithinkirthick.it19@bitsathy.ac.in'# enter your mail address
+password = 'Nithin@2002' # enter your password
 cleaner = re.compile('<.*?>') #clear the tags from mail
 cleaner_2 = re.compile('=.*?=')
 byte=[] # array declare
@@ -42,15 +42,15 @@ def get_inbox():#function
             frommail = re.sub(cleaner, '',email_message[From]) # rm the unwanted char
             if("Gmail Team" in frommail):
                 continue
-            elif("Team Name" in frommail):
+            elif("GOKULAKRISHNAN D" in frommail):
                 continue
-            elif("Team Name" in frommail):
+            elif("MADHUSUDHANAN G" in frommail):
                 continue
-            elif("Team Name" in frommail):
+            elif("BALAKUMAR M" in frommail):
                 continue
-            elif("Team Name" in frommail):
+            elif("SHRI THARANYAA J P BIT" in frommail):
                 continue
-            elif("Team Name" in frommail):
+            elif("TAMILSELVAN S" in frommail):
                 continue
             mail.store(num, "+FLAGS", "\\Deleted")
             print(f'\nDeleted From {frommail}at {email_message[Date]}') #format the input
