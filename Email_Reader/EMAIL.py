@@ -13,8 +13,8 @@ import time
 
 import datetime    
 host = 'imap.gmail.com' # mail api address
-username = 'Nithinkirthick.it19@bitsathy.ac.in'# enter your mail address
-password = 'Nithin@2002' # enter your password
+username = 'example.com'# enter your mail address
+password = 'Password' # enter your password
 cleaner = re.compile('<.*?>') #clear the tags from mail
 cleaner_2 = re.compile('=.*?=')
 byte=[] # array declare
