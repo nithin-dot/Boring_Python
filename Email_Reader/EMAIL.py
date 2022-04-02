@@ -9,9 +9,7 @@ import re
 from pytz import timezone
 from datetime import timedelta
 import email
-import time
 
-import datetime    
 host = 'imap.gmail.com' # mail api address
 username = 'example.com'# enter your mail address
 password = 'Password' # enter your password
@@ -42,15 +40,9 @@ def get_inbox():#function
             frommail = re.sub(cleaner, '',email_message[From]) # rm the unwanted char
             if("Gmail Team" in frommail):
                 continue
-            elif("GOKULAKRISHNAN D" in frommail):
+            elif("MAIL NAME" in frommail):
                 continue
-            elif("MADHUSUDHANAN G" in frommail):
-                continue
-            elif("BALAKUMAR M" in frommail):
-                continue
-            elif("SHRI THARANYAA J P BIT" in frommail):
-                continue
-            elif("TAMILSELVAN S" in frommail):
+            elif("MAIL NAME" in frommail):
                 continue
             mail.store(num, "+FLAGS", "\\Deleted")
             print(f'\nDeleted From {frommail}at {email_message[Date]}') #format the input
