@@ -6,8 +6,8 @@
 # Then run the program :)
 import imaplib
 import re 
-from pytz import timezone
-from datetime import timedelta
+# from pytz import timezone
+# from datetime import timedelta
 import email
 
 host = 'imap.gmail.com' # mail api address
@@ -20,18 +20,18 @@ email_data = {}
 def get_inbox():#function
     mail = imaplib.IMAP4_SSL(host) 
     mail.login(username, password) #login using your credentials
-    status, messages = mail.select() # read inbox from your mail address
+    # status, messages = mail.select() # read inbox from your mail address
     # today = datetime.datetime.now()  # get the current date and time
     # yesterday = today - timedelta(days = 1)  # get yesterday date
     # Time=yesterday.strftime("%d-%b-%Y") #format the date to 12 Oct 2021
     # date='SINCE '+Time
     _,search_data=mail.search(None,'ALL') # search mail by date
     list=[int(i) for i in search_data[0].decode().split()]
-    print(len(list))
+    # print(len(list))
     for num in search_data[0].split():
         print(f'Deleted Id:{num.decode()}')
         if(int(num.decode())>len(list)-500):
-            mail.expunge()
+            mail.expunge()# at the end of the function it delete all tagged msgs
             break
         _, data = mail.fetch(num,'(RFC822)') #Standard for ARPA Internet Text Messages
         _, b = data[0] #extract the 0th index from the list

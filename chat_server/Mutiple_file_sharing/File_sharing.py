@@ -1,7 +1,6 @@
 import socket
 import threading
 import os
-
 import buffer
 
 
@@ -128,7 +127,8 @@ def client():
             print('File Sent')
 
 if __name__=="__main__":
-    host=[l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
+# host=[l for l in ([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [[(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
+    # print(host)
     port=55578
     SIZE = 1024
     FORMAT = "utf-8"
@@ -139,8 +139,8 @@ if __name__=="__main__":
     print("To skip the chat use /e")
     print("Chat only when see Me: in your Terminal\n")
     if choosetype =="yes":      
-        server()
+        server(port)
     elif choosetype=="no":
-        client()
+        client(port)
     else:
         print("Please Enter yes or no")

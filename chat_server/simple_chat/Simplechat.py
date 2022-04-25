@@ -1,6 +1,5 @@
 import socket
 import threading 
-import os
 from tqdm import tqdm
 
 def server() :
@@ -48,25 +47,25 @@ def client():
     server_name = socket.recv(2048)
     server_name = server_name.decode()
     print(server_name,' has joined...')
-    def fileshare():
-        data = f"{FILENAME}_{FILESIZE}"
-        client.send(data.encode(FORMAT))
-        msg = client.recv(SIZE).decode(FORMAT)
-        print(f"SERVER: {msg}")
+    # def fileshare():
+    #     data = f"{FILENAME}_{FILESIZE}"
+    #     client.send(data.encode(FORMAT))
+    #     msg = client.recv(SIZE).decode(FORMAT)
+    #     print(f"SERVER: {msg}")
 
-        """ Data transfer. """
-        bar = tqdm(range(FILESIZE), f"Sending {FILENAME}", unit="B", unit_scale=True, unit_divisor=SIZE)
+    #     """ Data transfer. """
+    #     bar = tqdm(range(FILESIZE), f"Sending {FILENAME}", unit="B", unit_scale=True, unit_divisor=SIZE)
 
-        with open(FILENAME, "r") as f:
-            while True:
-                data = f.read(SIZE)
+    #     with open(FILENAME, "r") as f:
+    #         while True:
+    #             data = f.read(SIZE)
 
-                if not data:
-                    break
+    #             if not data:
+    #                 break
 
-                client.send(data.encode(FORMAT))
-                msg = client.recv(SIZE).decode(FORMAT)
-                bar.update(len(data))
+    #             client.send(data.encode(FORMAT))
+    #             msg = client.recv(SIZE).decode(FORMAT)
+    #             bar.update(len(data))
     while True:
             msg_cli = message = socket.recv(2048).decode()
             if  msg_cli =='/e' :
@@ -86,8 +85,8 @@ if __name__=="__main__":
     port=55578
     SIZE = 1024
     FORMAT = "utf-8"
-    FILENAME = "friends-final.txt"
-    FILESIZE = os.path.getsize(FILENAME)
+    # FILENAME = "friends-final.txt"
+    # FILESIZE = os.path.getsize(FILENAME)
     socket=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     choosetype=input("Are you Reciver : ")
     nickname=input("Enter your Nick Name: ")
