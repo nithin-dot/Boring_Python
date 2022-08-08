@@ -7,28 +7,34 @@ def getuserinput():
 # To find the missing elements in an array
 class Find_Missing_Numbers:
     def __init__(self,arr):
-        self.x=arr
-        self.n=len(arr)
-
+        self.x=sorted(arr)
+        self.f=self.x[0]
+        self.l=self.x[-1]
+    #unarrange
+    #find take index 0 and index n and check wheather the number is in the list
     def append(self):
         missing=[]
-        for i in range(self.x[0],self.x[-1]):
+        for i in range(self.f,self.l):
             if i not in self.x:
                 missing.append(i)
         return missing
-
+    #unarrange
+    #only valid if size is within element max 
     def Formo_1(self):
-        total = (self.n + 1)*(self.n + 2)/2
+        total= ((self.l-1 + 1)*(self.l-1 + 2)/2)-((self.f-2 + 1)*(self.f-2 + 2)/2)
         sum_of_A = sum(self.x)
         return int(total - sum_of_A)
-
+    #unarrange
+    # but range shoud be in order 1..10
     def Formo_2(self):
         i, total = 0, 1
-        for i in range(2, self.n + 2):
+        for i in range(2,len(self.x)+2):
             total += i
-            total -= self.x[i - 2]
+            # print(total)
+            total -= self.x[i-2]
+            # print(total,end=" ")
         return total
-    
+    #unarrange
     def Formo_3(self):
         self.n+=1
         n_elements_sum=self.n*(self.n+1)//2
@@ -39,7 +45,7 @@ class Find_Missing_Numbers:
 
     def Formo_5(self):
         return [self.x[i] + 1 for i in range(self.n - 1) if self.x[i] + 1 != self.x[i + 1]]
-        
+    #unarrange  
     def modulo(self):
         x1 = self.x[0]
         x2 = 1
@@ -49,9 +55,9 @@ class Find_Missing_Numbers:
         for i in range(2, self.n + 2):
             x2 = x2 ^ i
         return x1 ^ x2
- 
+
 if __name__ == '__main__':
-    x = [1,2,3,4,5,7,8,9] 
+    x = [1,3,4,5] 
     # x=getuserinput()
     func=Find_Missing_Numbers(x)
-    print(func.Formo_5())
+    print(func.Formo_2())

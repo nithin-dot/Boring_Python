@@ -24,9 +24,7 @@ class remove_depulicate:
 #real	0m0.022s
 #user	0m0.013s
 #sys	0m0.009s
-
     def hasing(self): 
-    	# code here
         mdict ={}
         res_List =[]
         for num in self.x:
@@ -34,6 +32,7 @@ class remove_depulicate:
                 mdict[num] = 1
             else:
                 mdict[num] += 1
+        print(mdict)
         for key, value in mdict.items():
             if value > 1:
                 res_List.append(key)
@@ -94,4 +93,4 @@ if __name__ == '__main__':
     x = [1,2,1,201,201,3,4,5,1,1,2,5,6,7,8,9,9] 
     # self.x=getuserinput()
     func=remove_depulicate(x)
-    print(func.fillamb())
+    print(func.hasing())
