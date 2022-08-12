@@ -1,78 +1,45 @@
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-import time, urllib.request
-import requests
+import instaloader
+from tqdm import tqdm
+L = instaloader.Instaloader()
 
-PATH = r"/usr/local/bin/chromedriver"
-driver = webdriver.Chrome(PATH)
+# Login or load session
 
-driver.get("https://www.instagram.com/")
+username="Username"
+password = "Password"
+L.interactive_login(username)  # (login)
 
-#login
-time.sleep(5)
-username = driver.find_element_by_css_selector("input[name='username']")
-password = driver.find_element_by_css_selector("input[name='password']")
-username.clear()
-password.clear()
-username.send_keys("username")
-password.send_keys("password")
-login = driver.find_element_by_css_selector("button[type='submit']").click()
+# # Obtain profile metadata
+profile = instaloader.Profile.from_username(L.context, username)
+print(profile)
+# Print list of followees
+followers_list = []
+following_list = []
+followers_count = 0
+following_count = 0
+print("\n\nFetching followers.....")
+for follower in tqdm(profile.get_followers(),desc="Followers", ascii=False, ncols=75):
+    followers_list.append(follower.username)
+    file = open("followers.txt", "a+")
+    file.write(followers_list[followers_count])
+    file.write("\n")
+    file.close()
+    followers_count = followers_count + 1
 
-# #save your login info?
-# time.sleep(10)
-# notnow = driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
-# #turn on notif
-# time.sleep(5)
-# notnow = driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]").click()
+print("Completed\n\n")
+print("Fetching followings.....")
+for followee in tqdm(profile.get_followees(),desc="Followings", ascii=False, ncols=75):
+    following_list.append(followee.username)
+    file = open("followings.txt", "a+")
+    file.write(following_list[following_count])
+    file.write("\n")
+    file.close()
+    following_count = following_count + 1
 
-#searchbox
-time.sleep(5)
-searchbox = driver.find_element_by_css_selector("input[placeholder='Search']")
-searchbox.clear()
-searchbox.send_keys("the.clever.programmer")
-time.sleep(5)
-searchbox.send_keys(Keys.ENTER)
-time.sleep(5)
-searchbox.send_keys(Keys.ENTER)
-
-
-#scroll
-scrolldown = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var scrolldown=document.body.scrollHeight;return scrolldown;")
-match=False
-while(match==False):
-    last_count = scrolldown
-    time.sleep(3)
-    scrolldown = driver.execute_script("window.scrollTo(0, document.body.scrollHeight);var scrolldown=document.body.scrollHeight;return scrolldown;")
-    if last_count==scrolldown:
-        match=True
-
-#posts
-posts = []
-links = driver.find_elements_by_tag_name('a')
-for link in links:
-    post = link.get_attribute('href')
-    if '/p/' in post:
-      posts.append(post)
-Counter=0
-print("[")
-for isolink in posts:
-	print(f'"{isolink.split("/")[4]}",',end="")
-	Counter+=1
-print("]")
-print("Total Posts From The Account :"+str(Counter))
-
-
-#get videos and images
-# download_url = ''
-# for post in posts:	
-# 	driver.get(post)
-# 	shortcode = driver.current_url.split("/")[-2]
-# 	time.sleep(7)
-# 	if driver.find_element_by_css_selector("img[style='object-fit: cover;']") is not None:
-# 		download_url = driver.find_element_by_css_selector("img[style='object-fit: cover;']").get_attribute('src')
-# 		urllib.request.urlretrieve( download_url, '{}.jpg'.format(shortcode))
-# 	else:
-# 		download_url = driver.find_element_by_css_selector("video[type='video/mp4']").get_attribute('src')
-# 		urllib.request.urlretrieve( download_url, '{}.mp4'.format(shortcode))
-# 	time.sleep(5)
-
+print("Completed\n\n")
+print("List of Users Who don't Follow You Back....\n\n")
+followings_who_dont_follow = set(following_list)-set(followers_list)
+textfile = open("followings_who_dont_follow.txt", "w") #Creating a text file
+for ff in followings_who_dont_follow:
+    print(f"https://www.instagram.com/{ff}/")
+    textfile.write(ff + "\n") #Listing down them in the text file
+textfile.close()
