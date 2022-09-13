@@ -1,0 +1,13 @@
+{
+    "API_key":"",
+
+    "watch":
+    [
+        {   
+            "name":"Camel Plushie",
+            "alert_bellow":94400,
+            "if_amount_bigger":0
+        }
+
+    ]
+}
